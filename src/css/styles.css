@@ -58,7 +58,7 @@ h1 {
 	font-size: 3rem;
 }
 
-#mode_switcher {
+#mode-switcher {
 	display: flex;
 	cursor: pointer;
 	background-color: var(--mode-sw-bg);
@@ -70,7 +70,7 @@ h1 {
 	transition: var(--default-transition);
 }
 
-#mode_switcher::before {
+#mode-switcher::before {
 	content: "";
 	height: 2em;
 	width: 2em;
@@ -83,7 +83,7 @@ h1 {
 	z-index: 0;
 }
 
-#mode_switcher svg {
+#mode-switcher svg {
 	transition: var(--default-transition);
 	z-index: 1;
 }
