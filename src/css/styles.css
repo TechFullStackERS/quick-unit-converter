@@ -1,33 +1,32 @@
+/* @import './normalize.css'; */
 @import url("https://fonts.googleapis.com/css2?family=Epilogue:wght@100;500;700&display=swap");
 
 :root[data-theme="light"] {
-	--body-bg: #ccd5ae;
+	--body-bg: #fff;
 	--switch-circle-bg: 0.5rem;
-	--nav-bg: #a8dadc;
-	--nav-cl: #001219;
-	--mode-sw-bg: #dad7cd;
+	--nav-bg: #fafafa;
+	--nav-text: #333;
+	--mode-sw-bg: #ddd;
 	--mode-sw-bef-bg: #fca311;
-	--light-fill: #000814;
-	--dark-fill: #3a606e;
+	--light-fill: #fff;
+	--dark-fill: #555;
 }
 
 :root[data-theme="dark"] {
-	--body-bg: #495057;
+	--body-bg: #292929;
 	--switch-circle-bg: 4.3rem;
-	--nav-bg: #1d3557;
-	--nav-cl: #94d2bd;
-	--mode-sw-bg: #e2d3a1;
-	--mode-sw-bef-bg: #fca311;
-	--light-fill: #2976e8;
-	--dark-fill: #bcec5c;
+	--nav-bg: #202124;
+	--nav-text: #eee;
+	--mode-sw-bg: #333;
+	--mode-sw-bef-bg: #222;
+	--light-fill: #999;
+	--dark-fill: #fff;
 }
 
 :root {
 	--transition-time: 0s;
-	--default-transition: color var(--transition-time) ease-in-out,
-		background-color var(--transition-time) ease-in-out,
-		border-color var(--transition-time) ease-in-out, fill var(--transition-time) ease-in-out,
-		transform var(--transition-time) ease-in-out;
+	--default-transition: color var(--transition-time) ease-in-out, background-color var(--transition-time) ease-in-out,
+		border-color var(--transition-time) ease-in-out, fill var(--transition-time) ease-in-out, transform var(--transition-time) ease-in-out;
 }
 
 * {
@@ -50,14 +49,15 @@ body {
 }
 
 nav {
-	padding: 1.5em 3em;
+	padding: 1em 3em;
 	display: flex;
-	color: var(--nav-cl);
+	color: var(--nav-text);
 	background-color: var(--nav-bg);
 	justify-content: space-between;
+    align-items: center;
 }
 
-h1 {
+nav h1 {
 	font-size: 3rem;
 }
 
@@ -93,10 +93,12 @@ h1 {
 
 #light {
 	fill: var(--light-fill);
+    padding: 0 2px 0 0;
 }
 
 #dark {
 	fill: var(--dark-fill);
+    padding: 2px;
 }
 
 .container {
