@@ -38,12 +38,23 @@
         </nav>
     </header>
 	<body>
-		<div class="container">
-			<label for="input">Enter Value:</label>
-			<input type="text" id="input" placeholder="e.g., 10 kg to lbs" />
-			<button id="convert">Convert</button>
-			<p id="result">Result:</p>
-		</div>
+        <main>
+            <input type="text" id="input" placeholder="Type your conversion query and press enter " />
+            <div class="container">
+                <p class="type">Mass</p>
+                <div style="display: flex;">
+                    <div>
+                        <p class="value">10</p>
+                        <p class="unit">Kilogram</p>
+                    </div>
+                    <p class="equal">=</p>
+                    <div>
+                        <p class="value">22.0462</p>
+                        <p class="unit">Pounds</p>
+                    </div>
+                </div>
+            </div>
+		</main>
 		<script src="js/calculation.js"></script>
 	</body>
 </html>
