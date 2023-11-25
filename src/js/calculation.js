@@ -1,13 +1,51 @@
 const inputField = document.getElementById("input");
-const convertButton = document.getElementById("convert");
-const resultElement = document.getElementById("result");
+const errorElement = document.getElementById("error");
+const resultContainerElement = document.getElementById("result-container");
 
-convertButton.addEventListener("click", () => {
+const input1ValueElement = document.getElementById("input1-value");
+const input1UnitElement = document.getElementById("input1-unit");
+
+const plusElement = document.getElementById("plus");
+const input2Element = document.getElementById("input2");
+const input2ValueElement = document.getElementById("input2-value");
+const input2UnitElement = document.getElementById("input2-unit");
+
+const outputValueElement = document.getElementById("output-value");
+const outputUnitElement = document.getElementById("output-unit");
+
+inputField.addEventListener("keypress", e => {
+	if (e.key !== "Enter") return;
+
 	const inputText = inputField.value;
-	const output = evaluateResultForInput(inputText);
+	const result = evaluateResultForInput(inputText);
 
-	if (output.error) resultElement.textContent = `Error: ${output.error}`;
-	else resultElement.textContent = `Result: ${toOptionalFixed(output.value, 4)} ${output.unit}`;
+	const { input, output, error } = result;
+
+	if (error) {
+        errorElement.style.display = "block";
+		errorElement.textContent = `Error: ${error}`;
+		resultContainerElement.style.display = "none";
+		return;
+	}
+
+    errorElement.style.display = "none";
+	resultContainerElement.style.display = "block";
+
+	input1ValueElement.textContent = input[0].value;
+	input1UnitElement.textContent = input[0].unit;
+	if (input.length === 1) {
+		plusElement.style.display = "none";
+		input2Element.style.display = "none";
+	} else {
+		plusElement.style.display = "inline";
+		input2Element.style.display = "block";
+
+		input2ValueElement.textContent = input[1].value;
+		input2UnitElement.textContent = input[1].unit;
+	}
+
+	outputValueElement.textContent = toOptionalFixed(output.value, 4);
+	outputUnitElement.textContent = output.unit;
 });
 
 function toOptionalFixed(num, digits) {
@@ -22,8 +60,14 @@ function evaluateResultForInput(inputText) {
 
 	if (!match) return { error: "Invalid command entered. Please use the correct format, e.g. '10 kg to lbs' or '1 kg and 200 g to pounds" };
 
-	if (isTwoUnitsInMatchArray(match)) return convertFromTwoUnits(match);
-	else return convertFromOneUnit(match);
+	if (isTwoUnitsInMatchArray(match)){
+        console.log("two-unit input provided");
+        return convertFromTwoUnits(match);
+    }
+	else {
+        console.log("one-unit input provided");
+        return convertFromOneUnit(match);
+    }
 }
 
 function unitNameToCorrectForm(value, unit) {
@@ -110,6 +154,7 @@ function isTwoUnitsInMatchArray(match) {
 }
 
 function convertFromOneUnit(match) {
+    // destructured values are "10", "kg", "lb" for input of "10 kg to lb"
 	const [, inputValue, , inputUnit, , , , , outputUnit] = match;
 
 	const normalizedInputUnit = convertUnitNameToFormulaKey(inputUnit);
@@ -120,11 +165,20 @@ function convertFromOneUnit(match) {
 
 	const value = result.value;
 	const unit = unitNameToCorrectForm(value, normalizedOutputUnit);
-    console.log("returnUnit", unit);
-	return { value, unit };
+
+	const output = { value, unit };
+	return createResultFrom([{ value: inputValue, unit: normalizedInputUnit }], output);
+}
+
+function createResultFrom(inputArray, output) {
+	const input = inputArray.map(({ value, unit }) => {
+		return { value, unit: unitNameToCorrectForm(value, unit) };
+	});
+	return { input, output };
 }
 
 function convertFromTwoUnits(match) {
+    // destructured values are "10", "kg", "2", "g", "lb" for input of "10 kg and 2 g to lb"
 	const [, inputValue1, , inputUnit1, , inputValue2, , inputUnit2, outputUnit] = match;
 
 	const normalizedInputUnit1 = convertUnitNameToFormulaKey(inputUnit1);
@@ -138,7 +192,14 @@ function convertFromTwoUnits(match) {
 
 	const value = output1.value + output2.value;
 	const unit = unitNameToCorrectForm(value, normalizedOutputUnit);
-	return { value, unit };
+	const output = { value, unit };
+	return createResultFrom(
+		[
+			{ value: inputValue1, unit: inputUnit1 },
+			{ value: inputValue2, unit: inputUnit2 }
+		],
+		output
+	);
 }
 
 function getUnitTypeOrError(inputUnit, outputUnit) {

@@ -5,8 +5,7 @@ const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? 
 
 document.documentElement.setAttribute("data-theme", lastThemeUsed ?? systemTheme);
 
-const updateTransitionTime = () =>
-	document.querySelector(":root").style.setProperty("--transition-time", "0.3s");
+const updateTransitionTime = () => document.querySelector(":root").style.setProperty("--transition-time", "0.3s");
 
 const switchTheme = () => {
 	const rootElement = document.documentElement;
