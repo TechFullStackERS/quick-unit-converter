@@ -16,6 +16,9 @@
 	--card-text: #fff;
 	--input-bg: #fafafa;
 	--input-text: #333;
+
+    --unit-category-bg: #f9ab00;
+    --unit-category-text: #fff;
 }
 
 :root[data-theme="dark"] {
@@ -32,6 +35,9 @@
 	--card-text: #eee;
 	--input-bg: #333;
 	--input-text: #fff;
+    
+    --unit-category-bg: #fdd663;
+    --unit-category-text: #202124;
 }
 
 :root {
@@ -157,22 +163,35 @@ button {
 	cursor: pointer;
 }
 
-.type {
-    font-size: 2.5rem;
-    margin: 0 0 4px;
+.unit-category {
+    display: inline-block;
+    background-color: var(--unit-category-bg);
+    color: var(--unit-category-text);
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 2px 6px;
+    margin: 0 0 2px;
+}
+
+.row {
+    display: flex;
 }
 
 .value {
     text-align: center;
 	font-size: 5rem;
 	padding: 0 4px;
+    text-align: center;
 }
 
 .equal {
 	font-size: 4rem;
-	padding: 0 8px;
+	padding: 0 10px;
 }
 
 .unit {
     font-size: 2rem;
+    margin: 2px 0 0;
+    text-align: center;
 }
